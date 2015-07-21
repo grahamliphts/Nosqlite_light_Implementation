@@ -124,7 +124,10 @@ void OptionTreatment(char* Option,Options* TreatedOption)
 	while (Option[i] != '\0' && Option[i] != '=')
 		i++;
 	i++;//---------------To remove the '-' char
-	TreatedOption->Arguments = (char*)malloc(strlen(Option) - i);
+	if (strlen(Option) - i < 0)
+		TreatedOption->Arguments = (char*)malloc((strlen(Option) - i)*sizeof(char));
+	else
+		TreatedOption->Arguments = (char*)malloc(sizeof(char));
 	TreatedOption->Arguments[0] = '\0';
 	while (Option[i] != '\0')
 	{
@@ -160,6 +163,10 @@ mode OptionExtract(const char* OptionLine)
 			return REMOVE;
 		if (strcmp(OptionName, "find") == 0)
 			return FIND;
+		if (strcmp(OptionName, "sort") == 0)
+			return SORT;
+		if (strcmp(OptionName, "set") == 0)
+			return SORT;
 	}
 	return ERROR;
 }
@@ -173,7 +180,124 @@ void ShowTreatedOption(Options* OptionToShow)
 int ApplyTreatedRequest(Options** TreatedRequest, int ArraySize)
 {
 	int counter;
+	unsigned char IsCollectionSelected = 0;
+	unsigned char IsOptionActive = 0;
+	
+	char* WorkingCollection = (char*)malloc(20 * sizeof(char));
 	for (counter = 0; counter < ArraySize; counter++)
-		ShowTreatedOption(TreatedRequest[counter]);
+	{
+		switch (TreatedRequest[counter]->OptionName)
+		{
+		case COLLECTION:
+			if (IsCollectionSelected == 0)
+			{
+				IsCollectionSelected = 1;
+				WorkingCollection = extractBetween('"', '"', TreatedRequest[counter]->Arguments);
+				printf("Working Collection = %s\n", WorkingCollection);
+			}
+			else
+			{
+				printf("%s\n", "Error : Two Collection selected");
+				return 1;
+			}
+			break;
+
+		case INSERT:
+			return insertInto(WorkingCollection, TreatedRequest[counter]->Arguments);
+			break;
+		case REMOVE:
+			break;
+		case PROJECTION:
+			break;
+		case FIND:
+			// ----------------------Dependance Reasearch
+			if (lookatOption(PROJECTION, TreatedRequest, ArraySize) != 0)
+			{
+				;
+			}
+			else
+				printf("%s\n", "Option Dependency error");
+			break;
+		case SET:
+			// ----------------------Dependance Reasearch
+			if (lookatOption(WHERE, TreatedRequest, ArraySize) != 0)
+			{
+				;
+			}
+			else
+				printf("%s\n", "Option Dependency error");
+			break;
+		case SORT:
+			// ----------------------Dependance Reasearch
+			if (lookatOption(PROJECTION, TreatedRequest, ArraySize) != 0)
+			{
+				;
+			}
+			else
+				printf("%s\n", "Option Dependency error");
+			break;
+		}
+	}
+	//	ShowTreatedOption(TreatedRequest[counter]);
+	
+	
 	return 0;
 }
+	
+char* extractBetween(const char start,const char end,const char* Line)
+{
+	int i = 0;
+	int j = 0;
+	char* toreturn = (char*)malloc(strlen(Line)*sizeof(char));
+	toreturn[0] = '\0';
+	while (Line[i] != '\0' && Line[i] != start)
+		i++;
+	if (Line[i] == start && Line[i] != '\0') // ---------------------Case of fisrt "start" occurence occure on 1st character of Line----------------------
+		i++;
+
+	while (Line[i] != '\0 ' && Line[i] != end)
+	{
+		toreturn[j] = Line[i];
+		i++;
+		j++;
+	}
+	toreturn[j] = '\0';
+	return toreturn;
+}
+
+int insertInto(char* collection, char* Insert_arguments)
+{
+	return 0;
+}
+
+int removeFrom(char* collection, char* Remove_arguments, char* Where_arguments)
+{
+	return 0;
+}
+
+int Set(char* collection, char* Set_arguments, char* Where_arguments)
+{
+	return 0;
+}
+
+int Projection(char* collection, char* Projection_arguments, char* Where_arguments)
+{
+	return 0;
+}
+
+int find(char* collection, char* Find_arguments, char Where_arguments, char* Projection_arguments)
+{
+	return 0;
+}
+
+unsigned int lookatOption(mode Research, Options** TreatedRequest, int ArraySize)
+{
+	int counter = 0;
+	for (counter = 0; counter < ArraySize; counter++)
+	{
+		if (TreatedRequest[counter]->OptionName == Research)
+			return counter;
+	}
+	return 0;
+}
+

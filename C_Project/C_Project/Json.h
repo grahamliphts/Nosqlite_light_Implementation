@@ -1,1 +1,1 @@
-char* loadBDD();
+void loadBDD();

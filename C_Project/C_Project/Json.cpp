@@ -2,44 +2,85 @@
 #include "stdafx.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <malloc.h>
 
-char* loadBDD()
+int loadBDD()
 {
-	char *source = NULL;
-	FILE *fp = fopen("BDD.json", "r");
-	if (fp != NULL) 
+	FILE* 		fp;
+	char*		title = NULL;
+	char*		str_keys = NULL;
+	char**		keys = NULL;
+	size_t 	read = 0;
+	int		i;
+	int		nb_keys = 0;
+	size_t		len = 0;
+
+	fp = fopen("BDD.json", "r");
+
+	if (NULL == fp)
 	{
-		/* Go to the end of the file. */
-		if (fseek(fp, 0L, SEEK_END) == 0) 
-		{
-			/* Get the size of the file. */
-			long bufsize = ftell(fp);
-			if (bufsize == -1) 
-			{
-				printf("Error length file");
-				return 0;
-			}
-
-			/* Allocate our buffer to that size. */
-			source = (char*)malloc(sizeof(char)* (bufsize + 1));
-			/* Go back to the start of the file. */
-			if (fseek(fp, 0L, SEEK_SET) == 0) 
-			{ 
-				printf("Error start file");
-				return 0;
-			}
-
-			/* Read the entire file into memory. */
-			size_t newLen = fread(source, sizeof(char), bufsize, fp);
-			if (newLen == 0)
-				fputs("Error reading file", stderr);
-			else
-				source[++newLen] = '\0'; 
-		}
-		fclose(fp);
+		fprintf(stderr, "Fail to open file in reading\n");
+		return NULL;
 	}
-	printf(source);
-	free(source); /* Don't forget to call free() later! */
+
+	while (read != -1)
+	{
+		read = getdelim(&title, &len, '{', fp);
+		if (read == -1)
+		{
+			free(title);
+			free(str_keys);
+			return 0;
+		}
+		read = getdelim(&str_keys, &len, '}', fp);
+		if (read != -1)
+		{
+			title = delete_space(title);
+			str_keys = delete_space(str_keys);
+			if (keys == NULL)
+				return NULL;
+		}
+		else
+		{
+			free(title);
+			free(str_keys);
+		}
+	}
 	return 0;
+}
+
+char* delete_space(char* str)
+{
+	int	i = 0;
+	int	j = 0;
+	int	size_result;
+	char*	result = NULL;
+
+	while (str[i] != '\0')
+	{
+		if (str[i] != '\n' && str[i] != '\t' && str[i] != ' ' && str[i] != '{')
+		{
+			str[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	str[j] = '\0';
+	size_result = strlen(str) + 1;
+	result = (char*)malloc(size_result);
+	if (result != NULL)
+		my_memcpy(result, str, size_result);
+	free(str);
+	return result;
+}
+
+void my_memcpy(char* dst, char* src, int len)
+{
+	int	i = 0;
+
+	for (i = 0; i < len; i++)
+	{
+		dst[i] = src[i];
+	}
 }

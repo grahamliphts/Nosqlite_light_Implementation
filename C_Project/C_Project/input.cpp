@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "input.h"
 #include <string.h>
+
 char * getline(void) {
 	char * line = (char*)malloc(100), *linep = line;
 	size_t lenmax = 100, len = lenmax;
@@ -49,6 +50,7 @@ void requestTreatment(const char* line, Options** TreatedRequest)
 	for (counter = 0; counter < 10; counter++)
 	{
 		TreatedRequest[counter] = (Options*)malloc(sizeof(Options));
+		TreatedRequest[counter]->OptionName = ERROR;
 	}
 	for (k = 0; k < 10; k++)
 	{

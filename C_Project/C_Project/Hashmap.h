@@ -1,4 +1,5 @@
-
+#ifndef HASHMAP_H
+#define HASHMAP_H
 // Header Hashmap
 
 // --------------------------------------------------
@@ -47,3 +48,5 @@ void hashmap_remove(t_hashmap * map, char* key);
 
 void hashmap_display(t_hashmap* map, void(*displayer)(void*));
 // --------------------------------------------------
+
+#endif

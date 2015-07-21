@@ -123,7 +123,7 @@ void OptionTreatment(char* Option,Options* TreatedOption)
 	TreatedOption->OptionName = Active_mode;
 	while (Option[i] != '\0' && Option[i] != '=')
 		i++;
-	i++;//---------------To remove the '-' char
+	//i++;//---------------To remove the '-' char
 	if (strlen(Option) - i < 0)
 		TreatedOption->Arguments = (char*)malloc((strlen(Option) - i)*sizeof(char));
 	else
@@ -255,7 +255,7 @@ char* extractBetween(const char start,const char end,const char* Line)
 	if (Line[i] == start && Line[i] != '\0') // ---------------------Case of fisrt "start" occurence occure on 1st character of Line----------------------
 		i++;
 
-	while (Line[i] != '\0 ' && Line[i] != end)
+	while (Line[i] != '\0' && Line[i] != end)
 	{
 		toreturn[j] = Line[i];
 		i++;

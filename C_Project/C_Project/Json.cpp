@@ -72,12 +72,31 @@ int loadBDD(char* text)
 			json_decref(root);
 			return 1;
 		}
-		value = json_object_get(object, "name");
-		if (json_is_string(value))
+		
+		void *iter = json_object_iter(object);
+		while (iter)
 		{
-			const char* valstr = json_string_value(value);
-			printf(valstr);
+			const char* key = json_object_iter_key(iter);
+			value = json_object_iter_value(iter);
+			if (json_is_string(value))
+			{
+				const char* valstr = json_string_value(value);
+				printf("%s ", valstr);
+			}
+			else if (json_is_integer(value))
+			{
+				long long valstr = json_integer_value(value);
+				printf("%d ", valstr);
+			}
+			else if (json_is_real(value))
+			{
+				double valstr = json_real_value(value);
+				printf("%f ", valstr);
+			}
+			iter = json_object_iter_next(object, iter);
 		}
+		printf("\n");
+
 	}
 
 	return 0;

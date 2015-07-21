@@ -10,12 +10,11 @@
 
 int main(void){
 	char* line;
-	char** RequestOptions;
+	const int OptionArrayMaxSize = 10;
+	Options* TreatedRequest[OptionArrayMaxSize];
 	do{
 	line = getline();
-	//printf("%s\n", line);
-	RequestOptions = requestTreatment(line);
-	OptionTreatment(RequestOptions);
+	requestTreatment(line, TreatedRequest);
 	} while (strcmp(line, "exit\n") != 0);
 	return 0;
 }

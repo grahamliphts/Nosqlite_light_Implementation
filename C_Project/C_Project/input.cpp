@@ -35,7 +35,7 @@ char * getline(void) {
 	return linep;
 }
 
-char** requestTreatment(const char* line)
+void requestTreatment(const char* line, Options** TreatedRequest)
 {
 	int i = 0;
 	int j = 0;
@@ -45,8 +45,16 @@ char** requestTreatment(const char* line)
 	unsigned int sharpCounter = 0;
 	char request = line[i];
 	char * OptionsArray[10];
+
+	for (counter = 0; counter < 10; counter++)
+	{
+		TreatedRequest[counter] = (Options*)malloc(sizeof(Options));
+	}
 	for (k = 0; k < 10; k++)
+	{
 		OptionsArray[k] = (char*)malloc(200 * sizeof(char)); //-------Option string allocation
+		OptionsArray[k][0] = '\0';
+	}
 	unsigned char IsinOption = 0;
 
 	while (request != '\n')
@@ -92,13 +100,70 @@ char** requestTreatment(const char* line)
 		printf("%s\n",OptionsArray[counter]);
 	putchar('\n');
 	*/
-
-	return OptionsArray;
+	for (counter = 0; counter < OptionNum; counter++)
+		OptionTreatment(OptionsArray[counter],TreatedRequest[counter]);
+	for (counter = 0; counter < OptionNum; counter++)
+		ShowTreatedOption(TreatedRequest[counter]);
 }
 
-void OptionTreatment(const char** Option)
+void OptionTreatment(char* Option,Options* TreatedOption)
 {
 	int i = 0;
-	//for (i = 0 ; )
-	//printf("%s", Option);
+	int j = 0;
+
+	mode Active_mode;
+
+	Active_mode = OptionExtract((const char*)Option);
+	if (Active_mode == ERROR)
+	{
+		printf("%s\n", "no suitable option found");
+		return;
+	}
+	TreatedOption->OptionName = Active_mode;
+	while (Option[i] != '\0' && Option[i] != '=')
+		i++;
+	i++;//---------------To remove the '-' char
+	TreatedOption->Arguments = (char*)malloc(strlen(Option) - i);
+	TreatedOption->Arguments[0] = '\0';
+	while (Option[i] != '\0')
+	{
+		TreatedOption->Arguments[j] = Option[i];
+		i++;
+		j++;
+	}
+	TreatedOption->Arguments[j] = '\0';
+}
+
+mode OptionExtract(const char* OptionLine)
+{
+	char* OptionName = (char*)malloc(20 * sizeof(char));
+	int i = 0;
+	while (OptionLine[i] != '=' && OptionLine[i] != '\0')
+	{
+		OptionName[i] = OptionLine[i];
+		i++;
+	}
+	OptionName[i] = '\0';
+
+	if (OptionName)
+	{
+		if (strcmp(OptionName, "collection") == 0)
+			return COLLECTION;
+		if (strcmp(OptionName, "insert") == 0)
+			return INSERT;
+		if (strcmp(OptionName, "where") == 0)
+			return WHERE;
+		if (strcmp(OptionName, "projection") == 0)
+			return PROJECTION;
+		if (strcmp(OptionName, "remove") == 0)
+			return REMOVE;
+		if (strcmp(OptionName, "find") == 0)
+			return FIND;
+	}
+	return ERROR;
+}
+
+void ShowTreatedOption(Options* OptionToShow)
+{
+	printf(" Option = %d, Arguments = %s\n", OptionToShow->OptionName, OptionToShow->Arguments);
 }

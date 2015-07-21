@@ -6,6 +6,7 @@
 #include <malloc.h>
 #include <jansson.h>
 #include <sys/stat.h>
+#include "list_contigue.h"
 
 char* readJson()
 {
@@ -21,10 +22,17 @@ char* readJson()
 	return bdd;
 }
 
-void SaveBDD()
+void SaveBDD(t_hashmap* map)
 {
 	json_t *root;
-
+	t_hashmap_key* keys = hashmap_keys(map);
+	int i;
+	/*for (i = 0; i < keys->length; i++)
+	{
+		t_list* list = hashmap_get(map, keys->keys[i]);
+		
+	}*/
+	
 	root = json_array();
 	for (int i = 0; i < 5; i++) //pour chaque entrée : jsonobject = hashmap
 	{

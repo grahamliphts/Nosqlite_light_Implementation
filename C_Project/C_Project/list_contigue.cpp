@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "list_contigue.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -5,7 +6,7 @@
 t_list* list_create(unsigned int max)
 {
 	t_list* list = (t_list*)malloc(sizeof(*list));
-	list->data = (int*)malloc(sizeof(int) * max);
+	list->data = (t_hashmap**)malloc(sizeof(t_hashmap*)* max);
 	list->length = 0;
 	list->max = max;
 	return list;
@@ -24,13 +25,13 @@ void list_display(t_list* list)
 	}
 }
 
-void list_append(t_list* list, int nb)
+void list_append(t_list* list, t_hashmap* nb)
 {
 	if(list->length < list->max)
 		list->data[list->length++] = nb;
 }
 
-void list_insert(t_list* list, unsigned int index, int data)
+void list_insert(t_list* list, unsigned int index, t_hashmap* data)
 { 
 	int i = 0;
 	if(list && list->max > list->length && index < list->length)
@@ -55,7 +56,7 @@ void list_remove_index(t_list* list, unsigned int index)
 	}
 }
 
-void list_remove_value(t_list* list, enum occurence_strat occ, int value)
+void list_remove_value(t_list* list, enum occurence_strat occ, t_hashmap* value)
 {
 	int first = -1;
 	int last = 0;
@@ -125,7 +126,7 @@ void list_revert_inside(t_list* list)
 {
 	int i = 0;
 	int j;
-	int temp;
+	t_hashmap* temp;
 	if(list)
 	{
 		for(i = 0, j = list->length - 1; i < list->length/2; i++, j--)
@@ -137,41 +138,11 @@ void list_revert_inside(t_list* list)
 	}
 }
 
-t_list list_concat(int count, t_list* list, ...)
-{
-	if(list && list->data)
-	{
-		va_list ap;
-		va_start(ap, list);
-		int idx;
-		t_list* list_app = NULL;
-		int newsize = 0;
-		for(idx++ < count && (list_arg = va_arg(ap, t_list*)))
-		{
-			newsize += list_arg->length;
-		}
-		va_end(ap);
-		va_start(ap, list)
-		int i = 0, j = 0;
-		idx = 0;
-		list_new = list_create(new_size);
-		list_arg = list;
-		do
-		{
-			for(j = 0; j < list_arg->length; i++, j++)
-				list_new->data[i] = list_arg->data[j];
-			idx++;
-		}while(idx <= count && (list = va_arg(ap,t_list)))
-		va_end(ap);
-	}
-	return list_new;
-}
-
-void list_insert_infinite(t_list* list, unsigned int index, int value)
+void list_insert_infinite(t_list* list, unsigned int index, t_hashmap* value)
 {
 	if(list->max <= list->length)
 	{
-		list = realloc(list, INCREASE_FACTOR * sizeof(*list));
+		list = (t_list*)realloc(list, INCREASE_FACTOR * sizeof(*list));
 		list->max += INCREASE_FACTOR;
 	}
 	list_insert(list, index, value);

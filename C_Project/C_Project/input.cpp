@@ -87,10 +87,18 @@ char** requestTreatment(const char* line)
 		OptionsArray[OptionNum][j] = '\0';
 		OptionNum++;
 	}
-	printf("%s", "-------Option List--------\n");
+	/*printf("%s", "-------Option List--------\n"); //--------------------------------------Print Bloc for debugging purpose--------------------
 	for (counter = 0; counter < OptionNum; counter++)
 		printf("%s\n",OptionsArray[counter]);
 	putchar('\n');
+	*/
 
 	return OptionsArray;
+}
+
+void OptionTreatment(const char** Option)
+{
+	int i = 0;
+	//for (i = 0 ; )
+	//printf("%s", Option);
 }

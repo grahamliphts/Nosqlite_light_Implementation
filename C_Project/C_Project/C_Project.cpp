@@ -15,6 +15,7 @@ int main(void){
 	line = getline();
 	//printf("%s\n", line);
 	RequestOptions = requestTreatment(line);
+	OptionTreatment(RequestOptions);
 	} while (strcmp(line, "exit\n") != 0);
 	return 0;
 }

@@ -1,0 +1,13 @@
+{
+    students:[{
+            name:Jean
+            rate:14
+			group:AL1
+        },
+        {
+            name:Jeanne
+            rate:12
+			group:DJV
+        }
+    ]
+}

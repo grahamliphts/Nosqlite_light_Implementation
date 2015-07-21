@@ -4,83 +4,81 @@
 #include <string.h>
 #include <stdlib.h>
 #include <malloc.h>
+#include <jansson.h>
+#include <sys/stat.h>
 
-int loadBDD()
+char* readJson()
 {
-	FILE* 		fp;
-	char*		title = NULL;
-	char*		str_keys = NULL;
-	char**		keys = NULL;
-	size_t 	read = 0;
-	int		i;
-	int		nb_keys = 0;
-	size_t		len = 0;
+	FILE *file;
+	fopen_s(&file, "BDD.json", "r");
+	struct stat st;
+	stat("BDD.json", &st);
+	long size = st.st_size;
+	char* bdd = (char*)calloc(1, size);
+	fread(bdd, 1, size, file);
 
-	fp = fopen("BDD.json", "r");
+	fclose(file);
+	return bdd;
+}
 
-	if (NULL == fp)
+void SaveBDD()
+{
+	json_t *root;
+
+	root = json_array();
+	for (int i = 0; i < 5; i++) //pour chaque entrée : jsonobject = hashmap
 	{
-		fprintf(stderr, "Fail to open file in reading\n");
-		return NULL;
+		json_t* object;
+		object = json_object();
+		json_t* string = json_string("val");
+		json_t* five = json_integer(5 + i);
+		json_t* taille = json_real(3.14f + (float)i);
+		json_object_set(object, "name", string);
+		json_object_set(object, "age", five);
+		json_object_set(object, "taille", taille);
+		json_array_append(root, object);
+	}
+	json_dump_file(root, "BDD.json", JSON_INDENT(4));
+}
+int loadBDD(char* text)
+{
+	json_error_t error;
+	json_t *root;
+	root = json_loads(text, 0, &error);
+	free(text);
+
+	if (!root)
+	{
+		fprintf(stderr, "error: on line %d: %s\n", error.line, error.text);
+		return 1;
+	}
+	if (!json_is_array(root))
+	{
+		fprintf(stderr, "error: root is not an array\n");
+		json_decref(root);
+		return 1;
+	}
+	int i;
+	int test = json_array_size(root);
+	for (i = 0; i < json_array_size(root); i++)
+	{
+
+		json_t *object, *value;
+
+		object = json_array_get(root, i);
+		if (!json_is_object(object))
+		{
+			fprintf(stderr, "error: commit data %d is not an object\n", i + 1);
+			json_decref(root);
+			return 1;
+		}
+		value = json_object_get(object, "name");
+		if (json_is_string(value))
+		{
+			const char* valstr = json_string_value(value);
+			printf(valstr);
+		}
 	}
 
-	while (read != -1)
-	{
-		read = getdelim(&title, &len, '{', fp);
-		if (read == -1)
-		{
-			free(title);
-			free(str_keys);
-			return 0;
-		}
-		read = getdelim(&str_keys, &len, '}', fp);
-		if (read != -1)
-		{
-			title = delete_space(title);
-			str_keys = delete_space(str_keys);
-			if (keys == NULL)
-				return NULL;
-		}
-		else
-		{
-			free(title);
-			free(str_keys);
-		}
-	}
 	return 0;
-}
-
-char* delete_space(char* str)
-{
-	int	i = 0;
-	int	j = 0;
-	int	size_result;
-	char*	result = NULL;
-
-	while (str[i] != '\0')
-	{
-		if (str[i] != '\n' && str[i] != '\t' && str[i] != ' ' && str[i] != '{')
-		{
-			str[j] = str[i];
-			j++;
-		}
-		i++;
-	}
-	str[j] = '\0';
-	size_result = strlen(str) + 1;
-	result = (char*)malloc(size_result);
-	if (result != NULL)
-		my_memcpy(result, str, size_result);
-	free(str);
-	return result;
-}
-
-void my_memcpy(char* dst, char* src, int len)
-{
-	int	i = 0;
-
-	for (i = 0; i < len; i++)
-	{
-		dst[i] = src[i];
-	}
 }

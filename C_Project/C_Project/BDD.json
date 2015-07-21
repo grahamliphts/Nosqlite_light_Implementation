@@ -1,31 +1,27 @@
-{
-    "colorsArray":[{
-            "colorName":"red",
-            "hexValue":"#f00"
-        },
-        {
-            "colorName":"green",
-            "hexValue":"#0f0"
-        },
-        {
-            "colorName":"blue",
-            "hexValue":"#00f"
-        },
-        {
-            "colorName":"cyan",
-            "hexValue":"#0ff"
-        },
-        {
-            "colorName":"magenta",
-            "hexValue":"#f0f"
-        },
-        {
-            "colorName":"yellow",
-            "hexValue":"#ff0"
-        },
-        {
-            "colorName":"black",
-            "hexValue":"#000"
-        }
-    ]
-}
+[
+    {
+        "age": 5,
+        "name": "val",
+        "taille": 3.1400001049041748
+    },
+    {
+        "age": 6,
+        "name": "val",
+        "taille": 4.1400003433227539
+    },
+    {
+        "age": 7,
+        "name": "val",
+        "taille": 5.1400003433227539
+    },
+    {
+        "age": 8,
+        "name": "val",
+        "taille": 6.1400003433227539
+    },
+    {
+        "age": 9,
+        "name": "val",
+        "taille": 7.1400003433227539
+    }
+]

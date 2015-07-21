@@ -10,9 +10,11 @@
 
 int main(void){
 	char* line;
+	char** RequestOptions;
 	do{
 	line = getline();
-	printf("%s\n", line);
+	//printf("%s\n", line);
+	RequestOptions = requestTreatment(line);
 	} while (strcmp(line, "exit\n") != 0);
 	return 0;
 }

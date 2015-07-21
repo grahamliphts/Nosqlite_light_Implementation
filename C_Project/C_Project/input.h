@@ -13,3 +13,4 @@ void requestTreatment(const char*, Options**);
 void OptionTreatment(char* Option, Options*);
 mode OptionExtract(const char* OptionLine);
 void ShowTreatedOption(Options* OptionToShow);
+int ApplyTreatedRequest(Options** TreatedRequest, int ArraySize);

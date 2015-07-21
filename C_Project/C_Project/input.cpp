@@ -104,8 +104,7 @@ void requestTreatment(const char* line, Options** TreatedRequest)
 	*/
 	for (counter = 0; counter < OptionNum; counter++)
 		OptionTreatment(OptionsArray[counter],TreatedRequest[counter]);
-	for (counter = 0; counter < OptionNum; counter++)
-		ShowTreatedOption(TreatedRequest[counter]);
+
 }
 
 void OptionTreatment(char* Option,Options* TreatedOption)
@@ -167,5 +166,14 @@ mode OptionExtract(const char* OptionLine)
 
 void ShowTreatedOption(Options* OptionToShow)
 {
-	printf(" Option = %d, Arguments = %s\n", OptionToShow->OptionName, OptionToShow->Arguments);
+	if (OptionToShow->OptionName != ERROR)
+		printf(" Option = %d, Arguments = %s\n", OptionToShow->OptionName, OptionToShow->Arguments);
+}
+
+int ApplyTreatedRequest(Options** TreatedRequest, int ArraySize)
+{
+	int counter;
+	for (counter = 0; counter < ArraySize; counter++)
+		ShowTreatedOption(TreatedRequest[counter]);
+	return 0;
 }

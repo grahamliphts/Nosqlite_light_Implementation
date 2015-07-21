@@ -15,6 +15,7 @@ int main(void){
 	do{
 	line = getline();
 	requestTreatment(line, TreatedRequest);
+	ApplyTreatedRequest(TreatedRequest, OptionArrayMaxSize);
 	} while (strcmp(line, "exit\n") != 0);
 	return 0;
 }

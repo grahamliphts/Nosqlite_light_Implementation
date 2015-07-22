@@ -4,28 +4,28 @@
         "values": [
             {
                 "group": "AL2",
-                "rate": "12",
-                "name": "Gabriel"
+                "name": "Gabriel",
+                "rate": "12"
             },
             {
                 "group": "AL1",
-                "rate": "11",
-                "name": "lol"
+                "name": "lol",
+                "rate": "11"
             },
             {
                 "group": "AL1",
-                "rate": "11",
-                "name": "lol"
+                "name": "lol",
+                "rate": "11"
             },
             {
                 "group": "AL3",
-                "rate": "14",
-                "name": "Toto"
+                "name": "Toto",
+                "rate": "14"
             },
             {
                 "group": "AL3",
-                "rate": "15",
-                "name": "Gru"
+                "name": "Gru",
+                "rate": "15"
             }
         ]
     }

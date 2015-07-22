@@ -214,3 +214,16 @@ void hashmap_remove(t_hashmap * map, char* key)
 		entry = &(*entry)->next;
 	}
 }
+
+void hashmap_delete(t_hashmap* map)
+{
+	t_hashmap_key* keys = hashmap_keys(map);
+	int i;
+	for (i = 0; i < keys->length; i++)
+	{
+		hashmap_remove(map, keys->keys[i]);
+	}
+
+	free(keys);
+	free(map);
+}

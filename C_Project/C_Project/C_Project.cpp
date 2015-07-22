@@ -60,6 +60,11 @@ int main(void)
 		{
 			SaveBDD(BDD);
 		}
+		else if (strcmp(line, "load\n") == 0)
+		{
+			hashmap_delete(BDD);
+			BDD = loadBDD(readJson());
+		}
 		else
 		{
 			requestTreatment(line, TreatedRequest);

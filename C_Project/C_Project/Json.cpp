@@ -93,11 +93,13 @@ void SaveBDD(t_hashmap* map)
 				value = json_string(valuestr);
 				json_object_set(entry, entrykeys->keys[k], value);
 			}
+			free(entrykeys);
 			json_array_append(elements, entry);
 		}
 		json_object_set(table, "values", elements);
 		json_array_append(root, table);
 	}
+	free(tablekeys);
 	json_dump_file(root, "BDD.json", JSON_INDENT(4));
 }
 
@@ -135,12 +137,12 @@ t_hashmap* loadBDD(char* text)
 		const char* namestr = json_string_value(name);
 		printf("Table name : %s \n", namestr);
 		elements = json_object_get(table, "values");
-
+		t_list* elementslist = list_create(json_array_size(elements));
 		for (j = 0; j < json_array_size(elements); j++)
 		{
 			json_t *entry;
 			entry = json_array_get(elements, j);
-
+			t_hashmap* hashentry = hashmap_create(50, 1.0f, 5.0f);
 			void *iter = json_object_iter(entry);
 			while (iter)
 			{
@@ -151,24 +153,33 @@ t_hashmap* loadBDD(char* text)
 				{
 					const char* valstr = json_string_value(value);
 					printf("\t%s %s ", key, valstr);
+					hashmap_put(hashentry, (char*)key, (void*)valstr);
 				}
 				else if (json_is_integer(value))
 				{
 					long long valstr = json_integer_value(value);
 					printf("\t%s %d ", key, valstr);
+					char buf[512];
+					sprintf_s(buf, "%s", valstr);
+					hashmap_put(hashentry, (char*)key, buf);
 				}
 				else if (json_is_real(value))
 				{
 					double valstr = json_real_value(value);
 					printf("\t%s %f ", key, valstr);
+					char buf[512];
+					sprintf_s(buf, "%s", valstr);
+					hashmap_put(hashentry, (char*)key, buf);
 				}
 				printf("\n");
 				iter = json_object_iter_next(entry, iter);
 			}
 			printf("\n");
+			list_append(elementslist, hashentry);
 		}
+		hashmap_put(map, (char*)namestr, elementslist);
 		printf("\n\n\n");
 	}
 
-	return 0;
+	return map;
 }

@@ -56,8 +56,15 @@ int main(void)
 	do
 	{
 		line = getline();
-		requestTreatment(line, TreatedRequest);
-		ApplyTreatedRequest(BDD, TreatedRequest, OptionArrayMaxSize);
+		if (strcmp(line, "save\n") == 0)
+		{
+			SaveBDD(BDD);
+		}
+		else
+		{
+			requestTreatment(line, TreatedRequest);
+			ApplyTreatedRequest(BDD, TreatedRequest, OptionArrayMaxSize);
+		}
 	} while (strcmp(line, "exit\n") != 0);
 	return 0;
 }

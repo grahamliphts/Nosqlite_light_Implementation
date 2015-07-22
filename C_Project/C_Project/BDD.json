@@ -1,33 +1,31 @@
 [
     {
-        "name": "profs",
+        "name": "student",
         "values": [
             {
-                "game": "HL3",
-                "name": "Martel",
-                "score": "42"
-            },
-            {
-                "code": "SSD-CR-1B00B",
-                "ohoh": "SSD 1ko USELESS"
-            },
-            {
-                "aaaa": "bbbb"
-            }
-        ]
-    },
-    {
-        "name": "students",
-        "values": [
-            {
-                "rate": "12",
                 "group": "AL2",
+                "rate": "12",
                 "name": "Gabriel"
             },
             {
-                "price": "52",
-                "ref": "SSD-CR-1TO",
-                "title": "SSD 1To CRUCIAL"
+                "group": "AL1",
+                "rate": "11",
+                "name": "lol"
+            },
+            {
+                "group": "AL1",
+                "rate": "11",
+                "name": "lol"
+            },
+            {
+                "group": "AL3",
+                "rate": "14",
+                "name": "Toto"
+            },
+            {
+                "group": "AL3",
+                "rate": "15",
+                "name": "Gru"
             }
         ]
     }

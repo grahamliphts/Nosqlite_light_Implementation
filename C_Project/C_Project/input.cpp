@@ -235,7 +235,7 @@ int ApplyTreatedRequest(t_hashmap* BDD, Options** TreatedRequest, int ArraySize)
 				find(BDD, WorkingCollection, extractBetween('"', '"', TreatedRequest[counter]->Arguments), FindResult);
 
 				if (FindResult[0] == -1)
-					printf("Aucun Resultat trouvé !");
+					printf("Aucun Resultat ! \n");
 			}
 			else
 				printf("%s\n", "'-projection' Option Dependency error");

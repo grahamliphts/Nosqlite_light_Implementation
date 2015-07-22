@@ -46,7 +46,7 @@ void* hashmap_get(t_hashmap* map, char* key);
 unsigned int hashmap_hashcode(char* key, unsigned int max);
 void hashmap_remove(t_hashmap * map, char* key);
 
-void hashmap_display(t_hashmap* map, void(*displayer)(void*));
+void hashmap_display(t_hashmap* map);
 // --------------------------------------------------
 
 #endif

@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Hashmap.h"
 #include <malloc.h>
+#include "Hashmap.h"
 
 // ------------------------------
 // Function:    hashmap_create
@@ -113,6 +113,7 @@ void* hashmap_get(t_hashmap* map, char* key)
 	return NULL;
 }
 
+
 // ------------------------------
 // Function:    hashmap_entry_create
 // Description: Create an entry for the hashmap
@@ -148,7 +149,8 @@ void displayer(void *d)
 t_hashmap_key* hashmap_keys(t_hashmap* map)
 {
 	t_hashmap_key* hkeys = (t_hashmap_key*)calloc(1, sizeof(t_hashmap_key));
-	int i;
+
+	int i; 
 	hkeys->keys = (char**)malloc(map->slots * sizeof(char*));
 	for (i = 0; i < map->slots; i++)
 	{
@@ -172,9 +174,20 @@ t_hashmap_key* hashmap_keys(t_hashmap* map)
 // Description:
 // Return:      None
 // ------------------------------
-void hashmap_display(t_hashmap* map, void(*displayer)(void*))
+void hashmap_display(t_hashmap* map)
 {
-	t_hashmap_key* hkeys = hashmap_keys(map);
+	unsigned int i = map->slots;
+	unsigned int j;
+	t_hashmap_entry* entry;
+	while (i--)
+	{
+		j = 0;
+		for (entry = map->entries[i]; entry != NULL; entry = entry->next)
+		{
+			printf("\t%s\n", entry->value);
+			j++;
+		}
+	}
 }
 
 // ------------------------------

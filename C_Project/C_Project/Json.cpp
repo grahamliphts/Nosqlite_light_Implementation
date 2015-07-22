@@ -1,4 +1,3 @@
-#include "Json.h"
 #include "stdafx.h"
 #include <stdio.h>
 #include <string.h>
@@ -7,6 +6,7 @@
 #include <jansson.h>
 #include <sys/stat.h>
 #include "list_contigue.h"
+#include "Json.h"
 
 void CreateHashmap()
 {
@@ -47,6 +47,7 @@ void CreateHashmap()
 	SaveBDD(bdd);
 	loadBDD(readJson());
 }
+
 char* readJson()
 {
 	FILE *file;
@@ -99,6 +100,7 @@ void SaveBDD(t_hashmap* map)
 	}
 	json_dump_file(root, "BDD.json", JSON_INDENT(4));
 }
+
 t_hashmap* loadBDD(char* text)
 {
 	json_error_t error;

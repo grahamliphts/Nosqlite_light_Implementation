@@ -12,6 +12,19 @@ typedef struct s_list
 	unsigned int max;
 }t_list;
 
+typedef struct s_arg
+{
+	void* key;
+	void* value;
+}t_arg;
+
+typedef struct s_list_arg
+{
+	t_arg** data;
+	unsigned int length;
+	unsigned int max;
+}t_list_arg;
+
 t_list* list_create(unsigned int max);
 void list_display(t_list* list);
 void list_append(t_list* list, t_hashmap* map);
@@ -25,5 +38,9 @@ t_list* list_revert_copy(t_list* list);
 void list_insert_infinite(t_list* list, unsigned int index, t_hashmap* value);
 void list_revert_inside(t_list*);
 void list_destroy(t_list* list);
+
+
+
+
 
 #endif

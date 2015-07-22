@@ -11,7 +11,7 @@ char * getline(void) {
 	char * line = (char*)malloc(100), *linep = line;
 	size_t lenmax = 100, len = lenmax;
 	int c;
-
+	//printf("%s", "$> MySqlLite ");
 	if (line == NULL)
 		return NULL;
 
@@ -127,10 +127,10 @@ void OptionTreatment(char* Option,Options* TreatedOption)
 	while (Option[i] != '\0' && Option[i] != '=')
 		i++;
 	//i++;//---------------To remove the '-' char
-	if (strlen(Option) - i < 0)
-		TreatedOption->Arguments = (char*)malloc((strlen(Option) - i)*sizeof(char));
-	else
-		TreatedOption->Arguments = (char*)malloc(sizeof(char));
+	//if (strlen(Option) - i < 0)
+	//	TreatedOption->Arguments = (char*)malloc((strlen(Option) - i)*sizeof(char));
+	//else
+		TreatedOption->Arguments = (char*)malloc(100*sizeof(char));
 	TreatedOption->Arguments[0] = '\0';
 	while (Option[i] != '\0')
 	{

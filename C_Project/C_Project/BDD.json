@@ -28,5 +28,15 @@
                 "rate": "15"
             }
         ]
+    },
+    {
+        "name": "bordel",
+        "values": [
+            {
+                "effect": "crash",
+                "probabilite": "100",
+                "name": "danger"
+            }
+        ]
     }
 ]

@@ -20,6 +20,7 @@ int main(void)
 	/* Zone de test */
 	t_hashmap* BDD = (t_hashmap*)hashmap_create(20, 0.6, 2.1);
 
+	/*
 	insertInto(BDD, "student", "{ name : 'Gabriel', rate : 12, group :'AL2'}");
 	insertInto(BDD, "student", "{ name : 'Loic', rate : 18.2, group :'AL2'}");
 	insertInto(BDD, "student", "{ name : 'Benoit', rate : 11, group :'AL1'}");
@@ -50,7 +51,7 @@ int main(void)
 	find(BDD, "student", "{}", FindResult);
 	//Sort(BDD, "student", "{rate:-1}", FindResult);
 	Projection(BDD, "student", "{name:1,rate:1}", FindResult);
-
+	*/
 	// -------------------------------------------------
 
 	do
